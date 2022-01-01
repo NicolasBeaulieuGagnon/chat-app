@@ -12,7 +12,7 @@ import OpenSideNav from "./OpenSideNav";
 const SideNav = () => {
   const [openSideBar, setOpenSideBar] = useState(false);
 
-  const { user, isLoggedIn } = useContext(UserContext);
+  const { isLoggedIn } = useContext(UserContext);
 
   useEffect(() => {
     if (isLoggedIn) {

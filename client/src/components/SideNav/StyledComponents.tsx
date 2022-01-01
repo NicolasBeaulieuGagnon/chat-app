@@ -47,7 +47,7 @@ export const OpenButton = styled(NotStyledButton)<BtnProps>`
   transition: 390ms ease;
   bottom: 7px;
   left: ${({ open }) => (open ? "70px" : "0px")};
-  z-index: 0;
+  z-index: 1;
   svg {
     transition: 200ms ease;
     transform: ${({ open }) => (open ? "rotate(0deg)" : "rotate(180deg)")};

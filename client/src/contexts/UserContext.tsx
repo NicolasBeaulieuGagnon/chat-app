@@ -1,6 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 import { UserContextInterface, userProp } from "./ContextInterfaces";
 
+import io from "socket.io-client";
+import { messageInterface } from "../components/ChatBox/ChatBoxIntereface";
+
+const socket = io(`http://localhost:8000`);
+
 const userDefaultState = {
   _id: "",
   username: "",
@@ -25,13 +30,31 @@ export const UserProvider = ({ children }: any) => {
   };
 
   useEffect(() => {
+    socket.on("message", ({ message, chatId }: messageInterface) => {
+      if (user.username.length > 0) {
+        const userCopy = { ...user };
+        const mapResult = userCopy.chats.map((chat) => {
+          if (chat._id === chatId) {
+            return {
+              ...chat,
+              messages: [...chat.messages, message],
+            };
+          } else {
+            return chat;
+          }
+        });
+        setUser({ ...user, chats: mapResult });
+      }
+    });
+  }, [user]);
+  useEffect(() => {
     const _id = localStorage.getItem("chatUserId");
     if (_id) {
       fetch(`/users/_id/${_id}`).then((res) =>
         res.json().then(({ data, error }) => {
           if (data) {
-            changeLoggedIn();
             setUser(data);
+            changeLoggedIn();
           } else {
             console.log(error);
           }

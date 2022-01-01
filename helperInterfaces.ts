@@ -8,7 +8,11 @@ export interface ChatRetrieveInt {
 }
 
 export interface createChatInt {
-  body: { participants: Array<string>; message: object };
+  body: {
+    participants: Array<string>;
+    message: string;
+    author: { _id: string; username: string };
+  };
 }
 
 export interface addingChatIdInt {
@@ -20,7 +24,7 @@ export interface addingChatIdInt {
 export interface addingMessageInt {
   body: {
     message: string;
-    authorId: string;
+    author: { _id: string; username: string };
   };
   params: {
     _id: string;

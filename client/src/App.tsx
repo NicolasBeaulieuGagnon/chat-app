@@ -5,9 +5,11 @@ import Home from "./pages/Home/Home";
 import { GlobalStyles } from "./components/GlobalStyles";
 import LoginDrawer from "./components/LoginDrawer/LoginDrawer";
 import SideNav from "./components/SideNav/SideNav";
+import ChatBox from "./components/ChatBox/ChatBox";
 
 const App = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   return (
     <Router>
       <GlobalStyles />
@@ -26,6 +28,7 @@ const App = () => {
             />
           }
         />
+        <Route path="/chat/:_id" element={<ChatBox />} />
       </Routes>
     </Router>
   );

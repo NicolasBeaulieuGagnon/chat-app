@@ -6,9 +6,9 @@ export const Wrapper = styled.div`
   background: var(--sidebar-bg);
   color: black;
   display: flex;
-  align-items: start;
-  justify-content: center;
-  gap: 8px;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: start;
   margin-top: 5px;
   margin-bottom: 5px;
   overflow: auto;
@@ -18,7 +18,7 @@ export const ChatButton = styled(NotStyledButton)`
   border: 2px solid black;
   font-size: 25px;
   padding: 6px 7px 3px;
-  margin: 2px 2px 5px 2px;
+  margin: 2px 20% 5px;
   border-radius: 17px;
   transition: 200ms ease;
   background: ${`rgb(

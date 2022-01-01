@@ -1,8 +1,14 @@
+interface messageInt {
+  author: { _id: string; username: string };
+  message: string;
+  sent: string;
+  _id: string;
+}
 interface chatProps {
   name: string;
   _id: string;
   created: string;
-  messages: Array<object>;
+  messages: Array<messageInt>;
   participants: Array<{ _id: string; username: string }>;
 }
 

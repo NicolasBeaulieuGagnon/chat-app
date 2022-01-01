@@ -1,4 +1,6 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { ChatProps } from "../ChatsInterface";
 
 import { ChatButton, HoverUsers, LetterStyle } from "./StyledComponents";
@@ -14,13 +16,19 @@ const ChatIcon = ({ chat }: ChatProps) => {
     .username.split("")[0]
     .toUpperCase();
   const users = chat.participants.filter((partiId) => partiId._id !== user._id);
+
+  const navigate = useNavigate();
   return (
     <Tippy
       content={users.map((user) => (
-        <HoverUsers>{user.username}</HoverUsers>
+        <HoverUsers key={user._id}>{user.username}</HoverUsers>
       ))}
     >
-      <ChatButton>
+      <ChatButton
+        onClick={() => {
+          navigate(`/chat/${chat._id}`);
+        }}
+      >
         {chat.participants.length > 2 ? (
           <HiOutlineUserGroup />
         ) : (

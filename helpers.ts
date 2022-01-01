@@ -55,7 +55,7 @@ export const retrieveUsersById = async ({
       {
         projection: {
           username: 1,
-          _id: 0,
+          _id: 1,
         },
       }
     )
