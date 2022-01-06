@@ -17,3 +17,6 @@ export interface addedUser {
 export interface credentialLogin {
   params: { username: string; password: string };
 }
+export interface searchInt {
+  params: { username: string };
+}

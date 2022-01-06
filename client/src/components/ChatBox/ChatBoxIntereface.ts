@@ -28,10 +28,5 @@ export const displayChatInitialState = {
   _id: "",
   created: "",
   messages: [],
-  participants: [
-    {
-      _id: "",
-      username: "",
-    },
-  ],
+  participants: [],
 };

@@ -17,6 +17,7 @@ const defaultState = {
   isLoggedIn: false,
   changeLoggedIn: () => {},
   setUser: () => {},
+  refetchUser: () => {},
   user: userDefaultState,
 };
 export const UserContext = createContext<UserContextInterface>(defaultState);
@@ -24,10 +25,13 @@ export const UserContext = createContext<UserContextInterface>(defaultState);
 export const UserProvider = ({ children }: any) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [user, setUser] = useState<userProp>(userDefaultState);
+  const [refetch, setRefetch] = useState(false);
 
   const changeLoggedIn = () => {
     setIsLoggedIn(!isLoggedIn);
   };
+
+  const refetchUser = () => setRefetch(!refetch);
 
   useEffect(() => {
     socket.on("message", ({ message, chatId }: messageInterface) => {
@@ -47,6 +51,7 @@ export const UserProvider = ({ children }: any) => {
       }
     });
   }, [user]);
+
   useEffect(() => {
     const _id = localStorage.getItem("chatUserId");
     if (_id) {
@@ -54,17 +59,21 @@ export const UserProvider = ({ children }: any) => {
         res.json().then(({ data, error }) => {
           if (data) {
             setUser(data);
-            changeLoggedIn();
+            if (!isLoggedIn) {
+              changeLoggedIn();
+            }
           } else {
             console.log(error);
           }
         })
       );
     }
-  }, []);
+  }, [refetch]);
 
   return (
-    <UserContext.Provider value={{ isLoggedIn, user, setUser, changeLoggedIn }}>
+    <UserContext.Provider
+      value={{ isLoggedIn, user, setUser, changeLoggedIn, refetchUser }}
+    >
       {children}
     </UserContext.Provider>
   );

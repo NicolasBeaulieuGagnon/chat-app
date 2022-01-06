@@ -5,7 +5,12 @@ import {
   retrieveUsersById,
   testPassword,
 } from "../helpers";
-import { newUser, addedUser, credentialLogin } from "./userInterfaces";
+import {
+  newUser,
+  addedUser,
+  credentialLogin,
+  searchInt,
+} from "./userInterfaces";
 const { v4: uuidv4 } = require("uuid");
 
 export const addNewUser = async (req: newUser, res: any) => {
@@ -87,6 +92,32 @@ export const getUserByCredentials = async (req: credentialLogin, res: any) => {
   }
 };
 
+export const getUserBySearch = async (req: searchInt, res: any) => {
+  const client = await MongoConnect();
+
+  try {
+    const result = await client
+      .db("chat-app")
+      .collection("users")
+      .find(
+        { username: { $regex: `${req.params.username}`, $options: "i" } },
+        {
+          projection: {
+            username: 1,
+            _id: 1,
+          },
+        }
+      )
+      .toArray();
+    res.status(200).json({ status: 200, data: result });
+  } catch (err) {
+    console.log("ERROR", err);
+    res.status(500).json({ status: 500, message: "Error" });
+  } finally {
+    MongoDisconnect(client);
+  }
+};
+
 export const getUserById = async (
   req: { params: { _id: string } },
   res: any
@@ -116,6 +147,8 @@ export const getUserById = async (
       });
     }
   } catch (err) {
+    console.log("ERROR", err);
+    res.status(500).json({ status: 500, message: "Error" });
   } finally {
     MongoDisconnect(client);
   }

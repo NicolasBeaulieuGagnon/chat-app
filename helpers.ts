@@ -3,6 +3,7 @@ import {
   ChatRetrieveInt,
   UsersRetrieveInt,
   populateParticipantsInt,
+  chatObjectInt,
 } from "./helperInterfaces";
 
 const { MongoClient } = require("mongodb");
@@ -114,4 +115,27 @@ export const addChatIdToPraticipants = async ({
     );
   });
   await Promise.all(promises);
+};
+
+export const findIfNewChat = async (
+  participants: Array<string>,
+  client: { db: Function }
+) => {
+  const foundChats = await client
+    .db("chat-app")
+    .collection("chats")
+    .find({ participants: { $all: participants } })
+    .toArray();
+  const filterChats = foundChats.filter((chat: chatObjectInt) => {
+    let chatExists = false;
+    chat.participants.forEach((chatPartiId: string) => {
+      if (participants.includes(chatPartiId)) {
+        chatExists = true;
+      }
+    });
+    if (chatExists && chat.participants.length === participants.length) {
+      return chat;
+    }
+  });
+  return filterChats;
 };

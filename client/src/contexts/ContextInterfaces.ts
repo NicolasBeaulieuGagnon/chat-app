@@ -12,11 +12,16 @@ interface chatProps {
   participants: Array<{ _id: string; username: string }>;
 }
 
+interface FriendsObject {
+  _id: string;
+  username: string;
+}
+
 interface user {
   _id: string;
   username: string;
   password: string;
-  friends: Array<object>;
+  friends: Array<FriendsObject>;
   chats: Array<chatProps>;
 }
 
@@ -25,12 +30,13 @@ export interface UserContextInterface {
   user: user;
   setUser: Function;
   changeLoggedIn: () => void;
+  refetchUser: Function;
 }
 
 export interface userProp {
   _id: string;
   username: string;
   password: string;
-  friends: Array<object>;
+  friends: Array<FriendsObject>;
   chats: Array<chatProps>;
 }

@@ -1,11 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
-import {
-  displayChatInitialState,
-  displayedChat,
-  messageInterface,
-} from "./ChatBoxIntereface";
+import { displayChatInitialState, displayedChat } from "./ChatBoxIntereface";
 import { ChatUsers, Messages, Wrapper } from "./StyledComponents";
 import Message from "./Message";
 import CapitalLetter from "./CapitalLetter";
@@ -31,7 +27,9 @@ const ChatBox = () => {
   useEffect(() => {
     if (isLoggedIn) {
       const filteredChat = user.chats.filter((chat) => chat._id === _id)[0];
-      setChat(filteredChat);
+      if (filteredChat) {
+        setChat(filteredChat);
+      }
       setLoading(false);
     }
   }, [_id, isLoggedIn, user]);

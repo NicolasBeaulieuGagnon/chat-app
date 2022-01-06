@@ -13,6 +13,7 @@ import {
   addNewUser,
   getUserByCredentials,
   getUserById,
+  getUserBySearch,
 } from "./handlers/userHandlers";
 import { SocketInt } from "./serverInterface";
 
@@ -30,6 +31,7 @@ app.use(helmet());
 app.use(morgan("dev"));
 
 app.get(`/users/_id/:_id`, getUserById);
+app.get(`/users-search/:username`, getUserBySearch);
 app.get(`/users/:username/:password`, getUserByCredentials);
 app.post(`/users`, addNewUser);
 

@@ -54,7 +54,10 @@ const CreateMessage = ({ chat, socket, setChat }: Props) => {
         }),
       }).then((res) =>
         res.json().then(({ data }) => {
-          socket.emit("message", { message: data, chatId: chat._id });
+          socket.emit("message", {
+            message: data.newMessage,
+            chatId: chat._id,
+          });
         })
       );
   };

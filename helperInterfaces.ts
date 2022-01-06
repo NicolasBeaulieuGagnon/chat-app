@@ -31,7 +31,7 @@ export interface addingMessageInt {
   };
 }
 
-interface chatObjectInt {
+export interface chatObjectInt {
   _id: string;
   created: string;
   participants: Array<string>;

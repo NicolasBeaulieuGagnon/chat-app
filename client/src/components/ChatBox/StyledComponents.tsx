@@ -1,18 +1,15 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  margin-left: 10%;
   height: 100%;
-  width: 80%;
+  margin-right: 75px;
+  margin-left: 75px;
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: center;
   padding: 25px;
   background: rgb(255, 255, 255, 0.3);
-  @media screen and (max-width: 600px) {
-    margin-left: 2%;
-  }
 `;
 
 export const ChatUsers = styled.div`
