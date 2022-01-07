@@ -4,19 +4,26 @@ import { UserContext } from "../../contexts/UserContext";
 import { OpenButton } from "./StyledComponents";
 
 interface Props {
-  openSideBar: boolean;
-  setOpenSideBar: Function;
+  openSideBars: boolean;
+  openingSideBars: Function;
+  closingSideBars: Function;
 }
 
-const OpenSideNav = ({ openSideBar, setOpenSideBar }: Props) => {
+const OpenSideNav = ({
+  openSideBars,
+  openingSideBars,
+  closingSideBars,
+}: Props) => {
   const { isLoggedIn } = useContext(UserContext);
 
   return (
     <>
       {isLoggedIn ? (
         <OpenButton
-          onClick={() => setOpenSideBar(!openSideBar)}
-          open={openSideBar}
+          onClick={() => {
+            openSideBars ? closingSideBars() : openingSideBars();
+          }}
+          open={openSideBars}
         >
           <BsArrowBarLeft />
         </OpenButton>

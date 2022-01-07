@@ -59,6 +59,7 @@ export const createNewChat = async (req: createChatInt, res: any) => {
         },
       ],
       notifications: 0,
+      color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
     };
 
     const findResult = await findIfNewChat(participants, client);
@@ -117,13 +118,11 @@ export const addMessage = async (req: addingMessageInt, res: any) => {
       );
 
     result.modifiedCount > 0
-      ? res
-          .status(200)
-          .json({
-            status: 200,
-            message: "message added",
-            data: { newMessage, _id: req.params._id },
-          })
+      ? res.status(200).json({
+          status: 200,
+          message: "message added",
+          data: { newMessage, _id: req.params._id },
+        })
       : res.status(400).json({
           status: 400,
           message: "something went wrong.",

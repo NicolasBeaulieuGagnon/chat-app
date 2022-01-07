@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { ChatProps } from "../ChatsInterface";
 
@@ -10,6 +10,7 @@ import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 
 const ChatIcon = ({ chat }: ChatProps) => {
+  const { _id } = useParams();
   const { user } = useContext(UserContext);
   const buddy = chat.participants
     .filter((partiId) => partiId._id !== user._id)[0]
@@ -25,6 +26,8 @@ const ChatIcon = ({ chat }: ChatProps) => {
       ))}
     >
       <ChatButton
+        color={chat.color}
+        selectedChat={chat._id === _id}
         onClick={() => {
           navigate(`/chat/${chat._id}`);
         }}

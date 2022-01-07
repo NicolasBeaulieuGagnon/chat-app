@@ -35,19 +35,15 @@ export const Letter = styled.span`
   padding: 0px 0px 3px 3px;
   display: inline-block;
 `;
-export const LetterWrapper = styled.div`
+export const LetterWrapper = styled.div<{ color: string }>`
   border: 2px solid black;
   font-size: 25px;
   padding: 6px 7px 3px;
   margin: 5px 5px 3px;
   border-radius: 17px;
   transition: 200ms ease;
-  background: ${`rgb(
-  ${Math.round(Math.random() * 255)},
-  ${Math.round(Math.random() * 255)},
-  ${Math.round(Math.random() * 255)},
-  0.4
-);`};
+  background: ${({ color }) => color};
+  text-shadow: 0 0 4px black;
 `;
 
 export const Messages = styled.div`

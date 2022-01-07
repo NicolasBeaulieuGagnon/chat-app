@@ -24,6 +24,8 @@ export const addNewUser = async (req: newUser, res: any) => {
       friends: [],
       chats: [],
       _id: uuidv4(),
+      color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+      friendRequests: [],
     };
 
     const errors = testPassword(req.body.password, req.body.confirmPassword);
@@ -51,6 +53,8 @@ export const addNewUser = async (req: newUser, res: any) => {
         .status(200)
         .json({ status: 200, data: addingUser, message: "added with success" });
   } catch (err) {
+    console.log("ERROR", err);
+    res.status(500).json({ status: 500, message: "Error" });
   } finally {
     MongoDisconnect(client);
   }

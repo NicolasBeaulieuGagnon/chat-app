@@ -12,6 +12,7 @@ const userDefaultState = {
   password: "",
   friends: [],
   chats: [],
+  color: "",
 };
 const defaultState = {
   isLoggedIn: false,
@@ -19,6 +20,7 @@ const defaultState = {
   setUser: () => {},
   refetchUser: () => {},
   user: userDefaultState,
+  color: "",
 };
 export const UserContext = createContext<UserContextInterface>(defaultState);
 
@@ -59,6 +61,7 @@ export const UserProvider = ({ children }: any) => {
         res.json().then(({ data, error }) => {
           if (data) {
             setUser(data);
+            socket.emit("loggedIn", { _id: data._id });
             if (!isLoggedIn) {
               changeLoggedIn();
             }

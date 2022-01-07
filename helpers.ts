@@ -7,7 +7,6 @@ import {
 } from "./helperInterfaces";
 
 const { MongoClient } = require("mongodb");
-const assert = require("assert");
 require("dotenv").config();
 const { MONGO_URI } = process.env;
 
@@ -57,6 +56,7 @@ export const retrieveUsersById = async ({
         projection: {
           username: 1,
           _id: 1,
+          color: 1,
         },
       }
     )
@@ -78,7 +78,7 @@ const populateChatParticipants = async ({
         .collection("users")
         .find(
           { _id: { $in: participants } },
-          { projection: { username: 1, _id: 1 } }
+          { projection: { username: 1, _id: 1, color: 1 } }
         )
         .toArray()
     );

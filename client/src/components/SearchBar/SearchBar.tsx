@@ -8,6 +8,7 @@ import {
   Result,
   ErrorMessage,
   Link,
+  CloseList,
 } from "./StyledComponents";
 import {
   Props,
@@ -18,6 +19,7 @@ import {
 import { BiSearchAlt } from "react-icons/bi";
 import Tippy from "@tippyjs/react";
 import { UserContext } from "../../contexts/UserContext";
+import DropDown from "../../animations/DropDown";
 
 const SearchBar = ({ callbackFunc, reason }: Props) => {
   const { user } = useContext(UserContext);
@@ -60,11 +62,16 @@ const SearchBar = ({ callbackFunc, reason }: Props) => {
       );
     }
   };
+
+  const closeList = () => {
+    setSearchResults(searchResultInitial);
+    setSearchValue("");
+  };
+
   return (
     <Wrapper
       autoComplete="off"
       onSubmit={(ev) => {
-        console.log("heading in!");
         ev.preventDefault();
         searchForUser();
       }}
@@ -91,32 +98,48 @@ const SearchBar = ({ callbackFunc, reason }: Props) => {
         </Submit>
       )}
       {!searchResults.loading && (
-        <Results>
-          {searchResults.error ? (
-            <ErrorMessage>
-              No user found with <span>'{searchValue}'</span> in their name.
-            </ErrorMessage>
-          ) : (
-            searchResults.foundUsers.map((foundUser) => {
-              return user._id !== foundUser._id ? (
-                <Tippy content={reason}>
-                  <Link
-                    onClick={(ev) => {
-                      ev.preventDefault();
-                      callbackFunc(foundUser);
-                      setSearchResults(searchResultInitial);
-                      setSearchValue("");
-                    }}
-                  >
-                    <Result>{foundUser.username}</Result>
-                  </Link>
-                </Tippy>
-              ) : (
-                <div></div>
-              );
-            })
-          )}
-        </Results>
+        <DropDown>
+          <CloseList
+            onClick={(ev) => {
+              ev.stopPropagation();
+              closeList();
+            }}
+          >
+            {" "}
+            x{" "}
+          </CloseList>
+          <Results>
+            {searchResults.error ? (
+              <ErrorMessage>
+                No user found with <span>'{searchValue}'</span> in their name.
+              </ErrorMessage>
+            ) : (
+              searchResults.foundUsers.map((foundUser) => {
+                return user._id !== foundUser._id ? (
+                  <Tippy content={reason}>
+                    <Link
+                      onClick={(ev) => {
+                        ev.preventDefault();
+                        callbackFunc(foundUser);
+                        setSearchResults(searchResultInitial);
+                        setSearchValue("");
+                      }}
+                    >
+                      <Result>{foundUser.username}</Result>
+                    </Link>
+                  </Tippy>
+                ) : (
+                  searchResults.foundUsers.length === 1 && (
+                    <ErrorMessage>
+                      No user found with <span>'{searchValue}'</span> in their
+                      name.
+                    </ErrorMessage>
+                  )
+                );
+              })
+            )}
+          </Results>
+        </DropDown>
       )}
     </Wrapper>
   );

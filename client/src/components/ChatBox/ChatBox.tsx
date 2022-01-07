@@ -42,11 +42,20 @@ const ChatBox = () => {
       {isLoggedIn && (
         <>
           <ChatUsers>
-            {chatPeople.map((person) => (
-              <>
-                <CapitalLetter key={person._id} username={person.username} />
-              </>
-            ))}
+            {chatPeople.map(
+              (person) => (
+                console.log(person),
+                (
+                  <>
+                    <CapitalLetter
+                      key={person._id}
+                      username={person.username}
+                      color={person.color}
+                    />
+                  </>
+                )
+              )
+            )}
           </ChatUsers>
           <Messages id="message-container">
             {chat.messages.map((message, index) => (

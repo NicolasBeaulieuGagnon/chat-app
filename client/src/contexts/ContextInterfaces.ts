@@ -9,12 +9,14 @@ interface chatProps {
   _id: string;
   created: string;
   messages: Array<messageInt>;
-  participants: Array<{ _id: string; username: string }>;
+  participants: Array<{ _id: string; username: string; color: string }>;
+  color: string;
 }
 
 interface FriendsObject {
   _id: string;
   username: string;
+  color: string;
 }
 
 interface user {
@@ -23,6 +25,7 @@ interface user {
   password: string;
   friends: Array<FriendsObject>;
   chats: Array<chatProps>;
+  color: string;
 }
 
 export interface UserContextInterface {
@@ -39,4 +42,5 @@ export interface userProp {
   password: string;
   friends: Array<FriendsObject>;
   chats: Array<chatProps>;
+  color: string;
 }

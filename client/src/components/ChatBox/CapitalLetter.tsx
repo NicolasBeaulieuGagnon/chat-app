@@ -2,9 +2,10 @@ import { Letter, LetterWrapper, User } from "./StyledComponents";
 
 interface Props {
   username: string;
+  color: string;
 }
 
-const CapitalLetter = ({ username }: Props) => {
+const CapitalLetter = ({ username, color }: Props) => {
   const letter = username.split("")[0].toUpperCase();
   const restOfWord = username
     .split("")
@@ -12,7 +13,7 @@ const CapitalLetter = ({ username }: Props) => {
     .join("")
     .replace(",", "");
   return (
-    <LetterWrapper>
+    <LetterWrapper color={color}>
       <Letter>{letter}</Letter>
       <User>{restOfWord}</User>
     </LetterWrapper>

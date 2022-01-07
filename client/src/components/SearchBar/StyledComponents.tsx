@@ -5,9 +5,10 @@ export const Wrapper = styled.form`
   display: flex;
   justify-content: flex-end;
   position: relative;
-  height: 26px;
   width: 100%;
   padding: 5px;
+  height: fit-content;
+  margin-right: 75px;
 `;
 
 export const Input = styled.input`
@@ -16,6 +17,7 @@ export const Input = styled.input`
   border: none;
   padding-left: 20px;
   border-radius: 20px;
+  height: 26px;
 `;
 
 export const Label = styled.label<{ hasValue: boolean }>`
@@ -38,21 +40,22 @@ export const Submit = styled(NotStyledButton)`
 `;
 
 export const Results = styled.ul`
-  position: absolute;
-  top: 27px;
-  right: 12px;
-  width: 150px;
-  background: white;
-  color: black;
-  margin: 0;
   padding: 0;
+  margin: 0;
   list-style-type: none;
-  text-align: center;
-  padding: 13px 5px 5px;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
   display: flex;
   flex-direction: column;
+  overflow: auto;
+  max-height: 200px;
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: none;
+  }
+  :hover {
+    box-shadow: 0 0 5px 1px grey inset;
+  }
 `;
 
 export const Result = styled.li``;
@@ -62,12 +65,33 @@ export const Link = styled(NotStyledButton)`
   padding: 2px;
   margin: 2px 0px;
   background: #6b3333;
-  border-radius: 20px;
+  border-radius: 3px;
   transition: 200ms ease;
   :hover {
     background: #0a3f20;
     color: white;
   }
+  :focus {
+    background: #0a3f20;
+    color: white;
+  }
+`;
+
+export const CloseList = styled.button`
+  position: absolute;
+  cursor: pointer;
+  border: 2px solid #700e0e;
+  outline: 0;
+  font-size: 15px;
+  font-family: inherit;
+  z-index: 1000;
+  color: #700e0e;
+  border-radius: 50%;
+  padding: 0;
+  height: 20px;
+  width: 20px;
+  top: -10px;
+  right: -10px;
 `;
 
 export const ErrorMessage = styled.div`

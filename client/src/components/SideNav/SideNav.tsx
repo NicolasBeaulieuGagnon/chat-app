@@ -11,11 +11,24 @@ import OpenSideNav from "./OpenSideNav";
 import { useNavigate } from "react-router-dom";
 import CreateNewChat from "../CreateNewChat/CreateNewChat";
 
-const SideNav = () => {
-  const [openSideBar, setOpenSideBar] = useState(false);
+interface Props {
+  openSideBars: boolean;
+  openingSideBars: Function;
+  closingSideBars: Function;
+}
+
+const SideNav = ({ openSideBars, openingSideBars, closingSideBars }: Props) => {
   const navigate = useNavigate();
 
   const { isLoggedIn } = useContext(UserContext);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      openingSideBars();
+    } else {
+      closingSideBars();
+    }
+  }, [isLoggedIn]);
 
   const openCreateChatModal = () => {
     const chatModal: any = document.getElementById("newChatModal");
@@ -23,15 +36,10 @@ const SideNav = () => {
     chatModal.style.visibility = "visible";
   };
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      setOpenSideBar(true);
-    }
-  }, [isLoggedIn]);
   return (
     <>
       <CreateNewChat />
-      <DrawerTransition state={openSideBar} delay={0} side="left">
+      <DrawerTransition state={openSideBars} delay={0} side="left">
         <Wrapper>
           <Options>
             <Option
@@ -48,13 +56,18 @@ const SideNav = () => {
           </Options>
           <Chats />
           <Options>
+            <Border />
             <Option>
               <BsGear />
             </Option>
           </Options>
         </Wrapper>
       </DrawerTransition>
-      <OpenSideNav openSideBar={openSideBar} setOpenSideBar={setOpenSideBar} />
+      <OpenSideNav
+        openSideBars={openSideBars}
+        openingSideBars={openingSideBars}
+        closingSideBars={closingSideBars}
+      />
     </>
   );
 };

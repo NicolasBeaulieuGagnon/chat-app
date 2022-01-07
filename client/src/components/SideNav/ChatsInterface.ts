@@ -4,6 +4,7 @@ export interface ChatProps {
     _id: string;
     created: string;
     messages: Array<object>;
-    participants: Array<{ _id: string; username: string }>;
+    participants: Array<{ _id: string; username: string; color: string }>;
+    color: string;
   };
 }

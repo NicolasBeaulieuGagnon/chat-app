@@ -6,9 +6,19 @@ import { GlobalStyles } from "./components/GlobalStyles";
 import LoginDrawer from "./components/LoginDrawer/LoginDrawer";
 import SideNav from "./components/SideNav/SideNav";
 import ChatBox from "./components/ChatBox/ChatBox";
+import RightSideNav from "./components/RightSideNav/RightSideNav";
 
 const App = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [openSideBars, setOpenSideBars] = useState(false);
+
+  const openingSideBars = () => {
+    setOpenSideBars(true);
+  };
+
+  const closingSideBars = () => {
+    setOpenSideBars(false);
+  };
 
   return (
     <Router>
@@ -17,7 +27,12 @@ const App = () => {
         isDrawerOpen={isDrawerOpen}
         setIsDrawerOpen={setIsDrawerOpen}
       />
-      <SideNav />
+      <SideNav
+        openSideBars={openSideBars}
+        openingSideBars={openingSideBars}
+        closingSideBars={closingSideBars}
+      />
+      <RightSideNav openSideBars={openSideBars} />
       <Routes>
         <Route
           path="/"

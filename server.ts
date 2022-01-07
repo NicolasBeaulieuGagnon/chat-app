@@ -10,6 +10,10 @@ import {
   getChatById,
 } from "./handlers/chatHandlers";
 import {
+  friendRequestDecision,
+  sendFriendRequest,
+} from "./handlers/friendHandlers";
+import {
   addNewUser,
   getUserByCredentials,
   getUserById,
@@ -33,6 +37,8 @@ app.use(morgan("dev"));
 app.get(`/users/_id/:_id`, getUserById);
 app.get(`/users-search/:username`, getUserBySearch);
 app.get(`/users/:username/:password`, getUserByCredentials);
+app.patch(`/users/friendRequestDecision/:_id/:adding`, friendRequestDecision);
+app.patch(`/users/friendRequest/:_id`, sendFriendRequest);
 app.post(`/users`, addNewUser);
 
 app.get(`/chats/:_id`, getChatById);
@@ -49,10 +55,18 @@ interface messageInterface {
   chatId: string;
 }
 
+interface loggedInInterface {
+  _id: string;
+}
+
 io.on("connection", (socket: SocketInt) => {
   console.log(`user connected with socket id ${socket.id}`);
   socket.on("message", ({ message, chatId }: messageInterface) => {
     io.emit("message", { message, chatId });
+  });
+
+  socket.on("loggedIn", ({ _id }: loggedInInterface) => {
+    io.emit("loggedIn", { _id });
   });
 });
 

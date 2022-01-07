@@ -6,12 +6,19 @@ export interface newUser {
   };
 }
 
+export interface friendRequestInt {
+  _id: string;
+  username: string;
+  friendId: string;
+}
 export interface addedUser {
   username: string;
   password: string;
   _id: string;
   friends: Array<string>;
   chats: Array<string>;
+  color: string;
+  friendRequests: Array<friendRequestInt>;
 }
 
 export interface credentialLogin {

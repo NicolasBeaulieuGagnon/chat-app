@@ -10,7 +10,7 @@ export interface displayedChat {
   _id: string;
   created: string;
   messages: Array<messageInt>;
-  participants: Array<{ _id: string; username: string }>;
+  participants: Array<{ _id: string; username: string; color: string }>;
 }
 
 export interface messageInterface {
